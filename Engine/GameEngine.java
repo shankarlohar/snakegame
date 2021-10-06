@@ -26,7 +26,7 @@ public class GameEngine extends JPanel implements ActionListener {
     private int SNAKE_BODY_COUNT; // This is the snake body count.
     private int apple_x; // X co-ordinate of Apple.
     private int apple_y; // Y co-ordinate of Apple.
-    private int SCORE = 1; // The SCORE counting of the game.
+    private int SCORE; // The SCORE counting of the game.
 
     private boolean leftDirection = false; // Left direction control variable.
     private boolean rightDirection = true; // Right direction control variable.
@@ -37,12 +37,21 @@ public class GameEngine extends JPanel implements ActionListener {
 
     private Timer timer; // This works to delay the snake speed or game.
 
-    private Image SNAKE_BODY_IMAGE; // Snake body image variable.
     private Image APPLE_IMAGE; // Apple image variavle.
-    private Image SNAKE_HEAD_IMAGE; // Snake head image variable.
+    private Image SNAKE_BODY_UP; // Snake body image variable.
+    private Image SNAKE_BODY_DOWN; // Snake body image variable.
+    private Image SNAKE_BODY_LEFT; // Snake body image variable.
+    private Image SNAKE_BODY_RIGHT; // Snake body image variable.
+    private Image SNAKE_HEAD_UP; // Snake head image variable.
+    private Image SNAKE_HEAD_DOWN; // Snake head image variable.
+    private Image SNAKE_HEAD_LEFT; // Snake head image variable.
+    private Image SNAKE_HEAD_RIGHT; // Snake head image variable.
+    private Image SNAKE_TAIL_UP; // Snake tail image variable.
+    private Image SNAKE_TAIL_DOWN; // Snake tail image variable.
+    private Image SNAKE_TAIL_LEFT; // Snake tail image variable.
+    private Image SNAKE_TAIL_RIGHT; // Snake tail image variable.
     private Image GAME_OVER_IMAGE; // Game over image variable.
 
-    private Clip BACKGROUND_MUSIC; // This is the song sound variable
     private Clip APPLE_EATEN_SOUND; // This is the eaten sound variable
     private Clip GAME_OVER_SOUND; // This is the game over sound variable
     private Clip POWER_UP_SOUND; // This is the power up sound variable variable
@@ -54,12 +63,35 @@ public class GameEngine extends JPanel implements ActionListener {
 
     // This function loads the image in the variables declared.
     private void loadImages() {
+        // Snake head images here
+        ImageIcon iihu = new ImageIcon("GameData/Snake/SnakeHeadUp.png");
+        SNAKE_HEAD_UP = iihu.getImage();
+        ImageIcon iihd = new ImageIcon("GameData/Snake/SnakeHeadDown.png");
+        SNAKE_HEAD_DOWN = iihd.getImage();
+        ImageIcon iihl = new ImageIcon("GameData/Snake/SnakeHeadLeft.png");
+        SNAKE_HEAD_LEFT = iihl.getImage();
+        ImageIcon iihr = new ImageIcon("GameData/Snake/SnakeHeadRight.png");
+        SNAKE_HEAD_RIGHT = iihr.getImage();
 
-        ImageIcon iih = new ImageIcon("GameData/Snake/SnakeHeadUp.png");
-        SNAKE_HEAD_IMAGE = iih.getImage();
+        // Snake Tail images here
+        ImageIcon iitu = new ImageIcon("GameData/Snake/SnakeTailUp.png");
+        SNAKE_TAIL_UP = iitu.getImage();
+        ImageIcon iitd = new ImageIcon("GameData/Snake/SnakeTailDown.png");
+        SNAKE_TAIL_DOWN = iitd.getImage();
+        ImageIcon iitl = new ImageIcon("GameData/Snake/SnakeTailLeft.png");
+        SNAKE_TAIL_LEFT = iitl.getImage();
+        ImageIcon iitr = new ImageIcon("GameData/Snake/SnakeTailRight.png");
+        SNAKE_TAIL_RIGHT = iitr.getImage();
 
-        ImageIcon iid = new ImageIcon("GameData/Snake/SnakeTailUp.png");
-        SNAKE_BODY_IMAGE = iid.getImage();
+        // Snake Body images here
+        ImageIcon iibu = new ImageIcon("GameData/Snake/SnakeBodyUp.png");
+        SNAKE_BODY_UP = iibu.getImage();
+        ImageIcon iibd = new ImageIcon("GameData/Snake/SnakeBodyDown.png");
+        SNAKE_BODY_DOWN = iibd.getImage();
+        ImageIcon iibl = new ImageIcon("GameData/Snake/SnakeBodyLeft.png");
+        SNAKE_BODY_LEFT = iibl.getImage();
+        ImageIcon iibr = new ImageIcon("GameData/Snake/SnakeBodyRight.png");
+        SNAKE_BODY_RIGHT = iibr.getImage();
 
         ImageIcon iia = new ImageIcon("GameData/Food/SnakeFood.png");
         APPLE_IMAGE = iia.getImage();
@@ -71,16 +103,6 @@ public class GameEngine extends JPanel implements ActionListener {
 
     // This function loads the sound clips in the variavles declared.
     private void loadSound() {
-
-        File GameMusic = new File("GameData/Music/GameMusic.wav");
-        AudioInputStream audioStream1;
-        try {
-            audioStream1 = AudioSystem.getAudioInputStream(GameMusic);
-            BACKGROUND_MUSIC = AudioSystem.getClip();
-            BACKGROUND_MUSIC.open(audioStream1);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-            e1.printStackTrace();
-        }
 
         File AppleEaten = new File("GameData/Music/AppleEaten.wav");
         AudioInputStream audioStream2;
@@ -116,9 +138,6 @@ public class GameEngine extends JPanel implements ActionListener {
 
     // This generates the apple in a random position.
     private void locateApple() {
-
-        APPLE_EATEN_SOUND.setMicrosecondPosition(0);
-        POWER_UP_SOUND.setMicrosecondPosition(0);
         int r = (int) (Math.random() * WINDOW_WIDTH / GRID_SIZE);
         apple_x = ((r * GRID_SIZE));
 
@@ -130,13 +149,14 @@ public class GameEngine extends JPanel implements ActionListener {
     private void checkApple() {
 
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
-
-            APPLE_EATEN_SOUND.start();
             SCORE += 10; // Increasing the Scores.
-            if (SCORE % 100 == 0) {
-                POWER_UP_SOUND.start();
-            }
+            APPLE_EATEN_SOUND.setMicrosecondPosition(0); // Resetting the apple eat sound
+            APPLE_EATEN_SOUND.start(); // Playing the apple eat sound
             SNAKE_BODY_COUNT++; // Increasing snake length.
+            if (SCORE % 100 == 0) {
+                POWER_UP_SOUND.setMicrosecondPosition(0); // Resetting the power up sound
+                POWER_UP_SOUND.start(); // Playing the power up sound
+            }
             locateApple(); // Calling a new apple.
         }
     }
@@ -151,7 +171,6 @@ public class GameEngine extends JPanel implements ActionListener {
             y[z] = 50;
         }
 
-        BACKGROUND_MUSIC.start();
         locateApple();
 
         timer = new Timer(DELAY, this);
@@ -278,9 +297,6 @@ public class GameEngine extends JPanel implements ActionListener {
                 checkApple();
                 checkCollision();
                 move();
-                if (!BACKGROUND_MUSIC.isActive()) {
-                    BACKGROUND_MUSIC.setMicrosecondPosition(0);
-                }
             } catch (LineUnavailableException e1) {
                 e1.printStackTrace();
             }
@@ -303,9 +319,55 @@ public class GameEngine extends JPanel implements ActionListener {
 
             for (int z = 0; z < SNAKE_BODY_COUNT; z++) {
                 if (z == 0) {
-                    g.drawImage(SNAKE_HEAD_IMAGE, x[z], y[z], this);
+
+                    if (leftDirection) {
+                        g.drawImage(SNAKE_HEAD_LEFT, x[z], y[z], this);
+                    }
+
+                    if (rightDirection) {
+                        g.drawImage(SNAKE_HEAD_RIGHT, x[z], y[z], this);
+                    }
+
+                    if (upDirection) {
+                        g.drawImage(SNAKE_HEAD_UP, x[z], y[z], this);
+                    }
+
+                    if (downDirection) {
+                        g.drawImage(SNAKE_HEAD_DOWN, x[z], y[z], this);
+                    }
+                } else if (z == (SNAKE_BODY_COUNT - 1)) {
+
+                    if (leftDirection) {
+                        g.drawImage(SNAKE_TAIL_LEFT, x[z], y[z], this);
+                    }
+
+                    if (rightDirection) {
+                        g.drawImage(SNAKE_TAIL_RIGHT, x[z], y[z], this);
+                    }
+
+                    if (upDirection) {
+                        g.drawImage(SNAKE_TAIL_UP, x[z], y[z], this);
+                    }
+
+                    if (downDirection) {
+                        g.drawImage(SNAKE_TAIL_DOWN, x[z], y[z], this);
+                    }
                 } else {
-                    g.drawImage(SNAKE_BODY_IMAGE, x[z], y[z], this);
+                    if (leftDirection) {
+                        g.drawImage(SNAKE_BODY_LEFT, x[z], y[z], this);
+                    }
+
+                    if (rightDirection) {
+                        g.drawImage(SNAKE_BODY_RIGHT, x[z], y[z], this);
+                    }
+
+                    if (upDirection) {
+                        g.drawImage(SNAKE_BODY_UP, x[z], y[z], this);
+                    }
+
+                    if (downDirection) {
+                        g.drawImage(SNAKE_BODY_DOWN, x[z], y[z], this);
+                    }
                 }
             }
 
