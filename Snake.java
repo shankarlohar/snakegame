@@ -1,34 +1,32 @@
 import Engine.*;
-import java.io.IOException;
-import javax.sound.sampled.*;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class Snake extends JFrame {
 
-    public Snake() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public Snake() {
         initUI();
     }
 
-    private void initUI() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    private void initUI() {
 
         add(new GameEngine());
 
         setResizable(false);
         pack();
 
-        setTitle("Snake Game");
+        setTitle("Shankar's Snake");
+        ImageIcon logo = new ImageIcon("GameData/Game/GameLogo.png");
+        setIconImage(logo.getImage());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {
         JFrame ex;
-        try {
-            ex = new Snake();
-            ex.setVisible(true);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
+
+        ex = new Snake();
+        ex.setVisible(true);
 
     }
 }
