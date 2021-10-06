@@ -11,7 +11,15 @@ This is a Simple Snake Game built for the purpose of learnign JAVA language.
 - The Game Uses [PNG's](https://rembound.com/files/creating-a-snake-game-tutorial-with-html5/snake-graphics.png).
 - The Game also has a [Sound library](https://themushroomkingdom.net/media/smb/wav).
 
-  
+## Screenshots
+
+![Game Screenshot](Game/Version-0.51.png)
+
+![Game Screenshot](Game/Version-0.52.png)
+
+![Game Screenshot](Game/Version-0.53.png)
+
+
 ## How to Learn JAVA and Contribute to this Project?
 
  - [First Step is to watch this JAVA Course half the way.](https://www.youtube.com/watch?v=xk4_1vDrzzo&t=19602s&ab_channel=BroCode)
