@@ -13,11 +13,11 @@ This is a Simple Snake Game built for the purpose of learnign JAVA language.
 
 ## Screenshots
 
-![Game Screenshot](Game/Version-0.51.png)
+![Game Screenshot](GameData/Game/Version-0.51.png)
 
-![Game Screenshot](Game/Version-0.52.png)
+![Game Screenshot](GameData/Game/Version-0.52.png)
 
-![Game Screenshot](Game/Version-0.53.png)
+![Game Screenshot](GameData/Game/Version-0.53.png)
 
 
 ## How to Learn JAVA and Contribute to this Project?
