@@ -3,8 +3,6 @@
 
 This is a Simple Snake Game built for the purpose of learnign JAVA language.
 
-![Logo](https://iconarchive.com/download/i24292/martin-berube/animal/snake.ico)
-
 
 ## Features of the Game
 
