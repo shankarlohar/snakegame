@@ -32,7 +32,7 @@ This is a Simple Snake Game built for the purpose of learnign JAVA language.
   
 ## Authors
 
-- [ShankarLohar](https://www.github.com/ShankarLohar)
+- [Shankar Lohar](https://www.github.com/ShankarLohar)
 
   
 ## Code Reference
